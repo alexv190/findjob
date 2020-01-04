@@ -23,3 +23,13 @@
             </div>
         </div>
 </#macro>
+
+<#macro showmessageifexist>
+    <#if message??>
+        <div class="row">
+            <div class="col alert <#if messagetype??>${messagetype}<#else>alert-danger</#if>">
+                <h5>${message}</h5>
+            </div>
+        </div>
+    </#if>
+</#macro>
