@@ -15,5 +15,5 @@
         </div>
     </div>
 
-    <a href="/user/${resume.id}/edit">Редактировать</a>
+    <a href="/resume/${resume.id}/edit">Редактировать</a>
 </@c.page>

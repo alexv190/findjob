@@ -16,11 +16,11 @@ public class ResumeController {
     @Autowired
     private ResumeRepo resumeRepo;
 
-    @GetMapping("/resumes")
+    @GetMapping("/resumesList")
     public String resumesList(Model model) {
         Iterable<Resume> resumes = resumeRepo.findAll();
         model.addAttribute("resumesList", resumes);
-        return "resume/resumes";
+        return "resume/resumesList";
     }
 
     @GetMapping("/resume/{resume_id}")
@@ -31,13 +31,13 @@ public class ResumeController {
 
     @GetMapping("/addResume")
     public String addResume() {
-        return "resume/addresume";
+        return "resume/addResume";
     }
 
     @PostMapping("/addResume")
     public String addResume(@RequestParam String position, @RequestParam String fio, @RequestParam String resumeText, @RequestParam Integer salary, Model model) {
         Resume resume1 = new Resume(position, fio, resumeText, salary);
         resumeRepo.save(resume1);
-        return "redirect:resumes";
+        return "redirect:resumesList";
     }
 }

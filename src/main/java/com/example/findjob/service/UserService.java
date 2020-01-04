@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,12 +46,12 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
 
-        sendActivationCode(user);
+        sendActivationCodeAfterEmailUpdate(user);
         return null;
     }
 
-    private void sendActivationCode(User user) {
-        if (StringUtils.isNotBlank(user.getActivationCode())) {
+    private void sendActivationCodeAfterEmailUpdate(User user) {
+        if (StringUtils.isNotBlank(user.getEmail())) {
             String msg = String.format("Hello, %s!\nActivation link: http://localhost:8080/activate/%s", user.getUsername(), user.getActivationCode());
             mailSender.send(user.getEmail(), "Activation code", msg);
         }
@@ -70,4 +72,38 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+
+    public void updateUser(User user, Map<String, String> form) {
+        user.getRoles().clear();
+        for (String key : form.keySet()) {
+            if (Role.getRoleFromString(key) != null) {
+                user.getRoles().add(Role.getRoleFromString(key));
+            }
+        }
+
+        String password = form.get("password");
+        String newEmail = form.get("email");
+        String userEmail = user.getEmail();
+
+        boolean emailChanged = !StringUtils.equals(userEmail, newEmail);
+        if (emailChanged) {
+            user.setEmail(newEmail);
+
+            if (!StringUtils.isEmpty(newEmail)) {
+                user.setActivationCode(UUID.randomUUID().toString());
+            }
+        }
+
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(password);
+        }
+
+        userRepo.save(user);
+        if (emailChanged)
+            sendActivationCodeAfterEmailUpdate(user);
+    }
+
+    public Iterable<User> findAll() {
+        return userRepo.findAll();
+    }
 }

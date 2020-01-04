@@ -12,11 +12,16 @@
                 <a class="nav-link" href="/">Домой</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/resumes">Резюме соискателей</a>
+                <a class="nav-link" href="/resumesList">Резюме соискателей</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/vacancies">Вакансии работодателей</a>
+                <a class="nav-link" href="/vacanciesList">Вакансии работодателей</a>
             </li>
+            <#if sec_isAdmin>
+            <li class="nav-item active">
+                <a class="nav-link" href="/userList">Список пользователей</a>
+            </li>
+            </#if>
         </ul>
 
         <div class="navbar-text mr-3">

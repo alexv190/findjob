@@ -4,7 +4,7 @@
 <@c.page>
     <@c.pagetitle  "Редактировать пользователя ${user.username}"/>
     <@c.showmessageifexist/>
-    <form action="/user/update/${user.id}" method="post" class="mt-3">
+    <form action="/user/${user.id}/edit" method="post" class="mt-3">
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">Логин:</label>
             <div class="col-sm-10">
@@ -20,7 +20,7 @@
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">E-mail:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" name="email" id="inputEmail" value="${user.email}">
+                <input type="email" class="form-control" name="email" id="inputEmail" value="${user.email!}">
             </div>
         </div>
         <h2>Роли:</h2>
