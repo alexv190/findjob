@@ -1,9 +1,12 @@
 package com.example.findjob.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Vacancy {
@@ -11,8 +14,16 @@ public class Vacancy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Укажите название компании")
+    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
     private String company;
+
+    @NotBlank(message = "Укажите должность")
+    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
     private String position;
+
+    @NotBlank(message = "Заполните текст вакансии")
+    @Length(max = 2048, message = "Длина должна быть меньше 2048 символов")
     private String vacancyText;
 
     public Vacancy() {

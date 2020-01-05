@@ -20,7 +20,7 @@
                     <div class="col-sm-10">
                         <a href="/resume/${resume.id}" class="card-link"><h5 class="card-title">${resume.position}</h5></a>
                         ${resume.fio}
-                        <p class="card-text">Зарплата: ${resume.salary}</p>
+                        <p class="card-text">Зарплата: ${(resume.salary)!"-"}</p>
                         <p class="card-text">${resume.resumeText}</p>
                     </div>
                     <div class="col-sm-2">
