@@ -1,11 +1,15 @@
 package com.example.findjob.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "usr")
@@ -14,10 +18,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Укажите имя пользователя")
+    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
     private String username;
+
+    @NotBlank(message = "Укажите пароль")
+    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
     private String password;
 
     private boolean active;
+
+    private String activationCode;
+
+    @NotBlank(message = "Укажите email")
+    @Email(message = "Некорректный email")
+    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
+    private String email;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
@@ -102,5 +118,25 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public void generateAndSetActivationCode() {
+        setActivationCode(UUID.randomUUID().toString());
     }
 }

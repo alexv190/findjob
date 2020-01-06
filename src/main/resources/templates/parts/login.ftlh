@@ -1,3 +1,4 @@
+<#import "common.ftlh" as c>
 <#include "security.ftlh">
 
 <#macro _csrffield>
@@ -5,29 +6,59 @@
 </#macro>
 
 <#macro loginform path isRegisterForm>
-    <#if message??>
-        <div class="row">
-            <div class="col alert alert-danger">
-                <h5>${message}</h5>
-            </div>
-        </div>
-    </#if>
+    <@c.showmessageifexist/>
     <form action="${path}" method="post" class="mt-3">
         <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">Логин:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="username" id="inputUsername">
+                <input type="text" class="form-control ${(usernameError??)?string('is-invalid','')}" name="username" id="inputUsername" value="${(user.username)!""}">
+                <#if usernameError??>
+                    <div class="invalid-feedback">
+                        ${usernameError}
+                    </div>
+                </#if>
             </div>
         </div>
         <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" id="inputPassword">
+                <input type="password" class="form-control ${(passwordError??)?string('is-invalid','')}" name="password" id="inputPassword">
+                <#if passwordError??>
+                    <div class="invalid-feedback">
+                        ${passwordError}
+                    </div>
+                </#if>
             </div>
         </div>
         <#if isRegisterForm>
+            <div class="form-group row">
+                <label for="passwordConfirm" class="col-sm-2 col-form-label">Повторите пароль:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control ${(passwordConfirmError??)?string('is-invalid','')}" name="passwordConfirm" id="inputPasswordConfirm">
+                    <#if passwordConfirmError??>
+                        <div class="invalid-feedback">
+                            ${passwordConfirmError}
+                        </div>
+                    </#if>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">E-mail:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control ${(emailError??)?string('is-invalid','')}" name="email" id="inputEmail" placeholder="some@some.org" value="${(user.email)!""}">
+                    <#if emailError??>
+                        <div class="invalid-feedback">
+                            ${emailError}
+                        </div>
+                    </#if>
+                </div>
+            </div>
             <@registration_role_radio />
         </#if>
+        <div class="col-sm-6">
+            <div class="g-recaptcha" data-sitekey="6Lcq18wUAAAAANyY7_MIQ-kKYHGNhoxwjiMv8Osq"></div>
+            <@c.showCustomMessageIfExist captchaError/>
+        </div>
         <@_csrffield />
         <div class="form-group row">
             <div class="col-sm-10">
