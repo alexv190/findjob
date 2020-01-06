@@ -1,7 +1,8 @@
-<#macro page>
+<#macro page extraHeadScript="">
     <html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        ${extraHeadScript?no_esc}
     </head>
     <title>FindJob</title>
     <body>
@@ -26,6 +27,16 @@
 
 <#macro showmessageifexist>
     <#if message??>
+        <div class="row">
+            <div class="col alert ${messageType!"alert-danger"}">
+                <h5>${message}</h5>
+            </div>
+        </div>
+    </#if>
+</#macro>
+
+<#macro showCustomMessageIfExist message="">
+    <#if message?? && (message?length > 0)>
         <div class="row">
             <div class="col alert ${messageType!"alert-danger"}">
                 <h5>${message}</h5>

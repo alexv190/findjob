@@ -1,7 +1,6 @@
 <#import "common.ftlh" as c>
 <#include "security.ftlh">
 
-
 <#macro _csrffield>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
 </#macro>
@@ -56,6 +55,10 @@
             </div>
             <@registration_role_radio />
         </#if>
+        <div class="col-sm-6">
+            <div class="g-recaptcha" data-sitekey="6Lcq18wUAAAAANyY7_MIQ-kKYHGNhoxwjiMv8Osq"></div>
+            <@c.showCustomMessageIfExist captchaError/>
+        </div>
         <@_csrffield />
         <div class="form-group row">
             <div class="col-sm-10">

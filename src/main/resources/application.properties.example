@@ -13,3 +13,6 @@ spring.mail.protocol=smtps
 mail.debug=true
 
 upload.path=
+
+recaptcha.secret=
+captcha.url=https://www.google.com/recaptcha/api/siteverify
