@@ -33,12 +33,12 @@
         </div>
         <#if isRegisterForm>
             <div class="form-group row">
-                <label for="inputPassword2" class="col-sm-2 col-form-label">Повторите пароль:</label>
+                <label for="passwordConfirm" class="col-sm-2 col-form-label">Повторите пароль:</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control ${(password2Error??)?string('is-invalid','')}" name="password2" id="inputPassword2">
-                    <#if password2Error??>
+                    <input type="password" class="form-control ${(passwordConfirmError??)?string('is-invalid','')}" name="passwordConfirm" id="inputPasswordConfirm">
+                    <#if passwordConfirmError??>
                         <div class="invalid-feedback">
-                            ${password2Error}
+                            ${passwordConfirmError}
                         </div>
                     </#if>
                 </div>

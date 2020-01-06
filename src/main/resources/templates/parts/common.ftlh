@@ -27,7 +27,7 @@
 <#macro showmessageifexist>
     <#if message??>
         <div class="row">
-            <div class="col alert <#if messagetype??>${messagetype}<#else>alert-danger</#if>">
+            <div class="col alert ${messageType!"alert-danger"}">
                 <h5>${message}</h5>
             </div>
         </div>

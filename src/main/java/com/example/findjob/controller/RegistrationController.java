@@ -31,14 +31,18 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid User user,  BindingResult bindingResult, Model model, @RequestParam Map<String, String> form) {
+    public String addUser(@RequestParam String passwordConfirm,
+                @Valid User user,
+                          BindingResult bindingResult,
+                          Model model, @RequestParam Map<String,
+            String> form) {
 
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(ControllerUtils.getErrors(bindingResult));
             return "registration";
         }
-        if (!StringUtils.equals(user.getPassword(), user.getPassword2())) {
-            model.addAttribute("password2Error","Пароли не совпадают");
+        if (!StringUtils.equals(user.getPassword(), passwordConfirm)) {
+            model.addAttribute("passwordConfirmError","Пароли не совпадают");
             return "registration";
         }
         String result = userService.addUser(user, form.get("r_role"));
@@ -55,7 +59,7 @@ public class RegistrationController {
         if (result != null) {//error
             model.addAttribute("message", result);
         } else {
-            model.addAttribute("messagetype", "alert-success");
+            model.addAttribute("messageType", "alert-success");
             model.addAttribute("message", "Пользователь активирован");
         }
         return "login";

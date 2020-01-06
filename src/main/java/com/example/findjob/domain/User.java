@@ -26,11 +26,6 @@ public class User implements UserDetails {
     @Length(max = 255, message = "Длина должна быть меньше 255 символов")
     private String password;
 
-    @Transient
-    @NotBlank(message = "Повторите пароль")
-    @Length(max = 255, message = "Длина должна быть меньше 255 символов")
-    private String password2;
-
     private boolean active;
 
     private String activationCode;
@@ -67,14 +62,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
     }
 
     public boolean isActive() {
