@@ -1,0 +1,33 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("Checkout code") {
+            steps {
+                git 'https://github.com/alexv190/findjob.git'
+                //copy actual application.properties file instead of example file present in git
+                sh 'cp /home/project/application.properties ./src/main/resources/application.properties'
+            }
+        }
+        stage("Compile-package") {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage("Docker-compose build") {
+            steps {
+                dir("build") {
+                    sh 'docker-compose build --no-cache'
+                }
+            }
+        }
+    }
+}
