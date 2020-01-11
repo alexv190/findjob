@@ -10,9 +10,8 @@ pipeline {
         timestamps()
     }
     stages {
-        stage("Checkout code") {
+        stage("Preparing code") {
             steps {
-                git 'https://github.com/alexv190/findjob.git'
                 //copy actual application.properties file instead of example file present in git
                 sh 'cp /home/project/application.properties ./src/main/resources/application.properties'
             }
@@ -24,7 +23,8 @@ pipeline {
         }
         stage("Docker-compose build") {
             steps {
-                dir("build") {
+                sh 'cp target/findjob-1.0-SNAPSHOT.jar buildapp'
+                dir("buildapp") {
                     sh 'docker-compose build --no-cache'
                 }
             }
