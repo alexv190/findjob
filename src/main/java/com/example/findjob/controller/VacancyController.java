@@ -1,6 +1,5 @@
 package com.example.findjob.controller;
 
-import com.example.findjob.domain.Resume;
 import com.example.findjob.domain.Vacancy;
 import com.example.findjob.repo.VacancyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 public class VacancyController {
@@ -28,10 +26,16 @@ public class VacancyController {
     }
 
     @GetMapping("/vacanciesList")
-    public String vacanciesList(Map<String, Object> model) {
-        Iterable<Vacancy> vacancies = vacancyRepo.findAll();
+    public String vacanciesList(@RequestParam(name = "search", required = false) String search, Model model) {
+        Iterable<Vacancy> vacancies;
+        if (search == null)
+            vacancies = vacancyRepo.findAll();
+        else {
+            vacancies = vacancyRepo.searchInVacancyList(search);
+            model.addAttribute("search", search);
+        }
 
-        model.put("vacanciesList", vacancies);
+        model.addAttribute("vacanciesList", vacancies);
         return "vacancy/vacanciesList";
     }
 

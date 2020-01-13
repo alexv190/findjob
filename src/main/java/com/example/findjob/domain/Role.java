@@ -3,7 +3,7 @@ package com.example.findjob.domain;
 import org.apache.commons.lang3.StringUtils;
 
 public enum Role {
-    USER("Пользователь"), EMPLOYER("Соискатель"), EMPLOYEE("Работодатель"), ADMIN("Администратор");
+    USER("Пользователь"), EMPLOYER("Работодатель"), EMPLOYEE("Соискатель"), ADMIN("Администратор");
 
     public static Role getRoleFromString(String str_role) {
         try {
