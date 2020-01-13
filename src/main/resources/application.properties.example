@@ -1,6 +1,6 @@
 server.port=8081
 
-spring.datasource.url=jdbc:postgresql://localhost/findbestjob
+spring.datasource.url=jdbc:postgresql://db/findbestjob
 spring.datasource.username=postgres
 spring.datasource.password=
 spring.jpa.generate-ddl=true

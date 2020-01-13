@@ -5,7 +5,7 @@
     <ul class="nav justify-content-end">
         <li class="nav-item m-2">
             <form class="form-inline m-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Найти" aria-label="Search">
+                <input class="form-control mr-sm-2" name="search"  type="search" placeholder="Найти" aria-label="Search" value="${search!}">
                 <button class="btn btn-outline-success my-sm-0" type="submit">Найти</button>
             </form>
         </li>
